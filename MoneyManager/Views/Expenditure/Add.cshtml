@@ -1,0 +1,25 @@
+﻿@model Expenditure
+
+@{
+    ViewData["Title"] = "Add Expenditure";
+}
+
+<form asp-action="Add" asp-controller="Expenditure" method="post" style="max-width: 480px; margin: 0 auto;">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Title</label>
+        <input type="text" class="form-control" asp-for="Title" placeholder="Title">
+        <span class="text-danger" asp-validation-for="Title"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Amount" class="form-label">Amount</label>
+        <input type="number" class="form-control" asp-for="Amount" placeholder="Amount">
+        <span class="text-danger" asp-validation-for="Amount"></span>
+    </div>
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

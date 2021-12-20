@@ -1,0 +1,30 @@
+﻿@model List<Income>
+
+@{
+    ViewData["Title"] = "Income";
+    var i = 1;
+}
+
+<div class="mt-2">
+    <a asp-action="Add" asp-controller="Income" class="btn btn-primary">+ Income</a>
+</div>
+
+<table class="table mt-4">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Source</th>
+            <th scope="col">Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var expenditure in Model)
+        {
+            <tr>
+                <td>@(i++)</td>
+                <td scope="row">@expenditure.Source</td>
+                <td>@expenditure.Amount</td>
+            </tr>
+        }
+    </tbody>
+</table>
