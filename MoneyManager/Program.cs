@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MoneyManager.Data;
+using Microsoft.AspNetCore.Identity;
+using MoneyManager.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Sqlite")));
-
+builder.Services.AddDefaultIdentity<MoneyManagerUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<MoneyManagerIdentityContext>();builder.Services.AddDbContext<MoneyManagerIdentityContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("Sqlite")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,11 +26,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.Run();
